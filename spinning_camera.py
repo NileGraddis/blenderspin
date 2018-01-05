@@ -1,5 +1,6 @@
 import math
 import os
+import copy as cp
 
 import bpy
 
@@ -137,17 +138,20 @@ def main():
         'z': -0.0185,
         'steps': 300
         }
-    
-    for dir_name in os.listdir('.'):
-        ply_file = None
-        if os.path.isdir(dir_name):
-            ply_file = os.path.join(dir_name, 'recon.ply')
-            
+
+    ply_filename = 'recon.ply'
+    base_dir = '.'    
+
+
+    for dir_name in os.listdir(base_dir):
+
+        ply_file = os.path.join(base_dir, dir_name, ply_filename) 
         if not os.path.exists(ply_file):
             continue
 
-        base_config['ply'] = ply_file
-        base_config['outdir'] = dir_name
+        config = cp.deepcopy(base_config)
+        config['ply'] = ply_file
+        config['outdir'] = os.path.join(base_dir, dir_name)
 
         reset_blend()    
         setup_world(resolution_percentage=20)
