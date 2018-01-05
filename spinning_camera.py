@@ -1,5 +1,7 @@
-import bpy
 import math
+import os
+
+import bpy
 
 def reset_blend():
     #bpy.ops.wm.read_factory_settings()
@@ -138,7 +140,7 @@ def main():
     
     for dir_name in os.listdir('.'):
         ply_file = None
-        if os.isdir(dir_name):
+        if os.path.isdir(dir_name):
             ply_file = os.path.join(dir_name, 'recon.ply')
             
         if not os.path.exists(ply_file):
